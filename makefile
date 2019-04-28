@@ -1,10 +1,12 @@
 # makefile for terrapipe
+.PHONY: dependencies
 dependencies:
 	which docker git
 
-# Experimental: build a local version of an AWS curated build container image
+.PHONY: build_build_container
 build_build_container: dependencies
-	docker build github.com/aws/aws-codebuild-docker-images.git#:ubuntu/standard/1.0
+	docker build -t local/aws-codebuild-ubuntu-standard-minimal .
 
-test: dependencies
-	./codebuild_build.sh -i ubuntu -a bucket
+.PHONY: test
+test: build_build_container
+	./codebuild_build.sh -c -i local/aws-codebuild-ubuntu-standard-minimal -a bucket

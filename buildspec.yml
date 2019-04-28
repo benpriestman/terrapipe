@@ -2,12 +2,13 @@ version: 0.2
   
 phases:
   install:
+    # Pre-requisites: git, curl unzip
     commands:
-      - apt update                       # ToDO: remove this once using an AWS curated image
-      - apt -y install git curl unzip    # ToDO: remove this once using an AWS curated image
       - git clone https://github.com/tfutils/tfenv.git ~/.tfenv
       - PATH=${PATH}:~/.tfenv/bin
-  pre_build:
-    commands:
       - tfenv install
-
+  build:
+    commands:
+      - terraform init
+      - terraform plan
+      - terraform apply
