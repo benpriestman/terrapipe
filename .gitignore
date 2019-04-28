@@ -7,3 +7,7 @@
 
 # .tfvars files
 *.tfvars
+
+# local codebuild output
+bucket/
+
