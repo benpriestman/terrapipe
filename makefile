@@ -7,6 +7,9 @@ dependencies:
 build_build_container: dependencies
 	docker build -t local/aws-codebuild-ubuntu-standard-minimal .
 
+.PHONY: test_local
+test_local: build_build_container
+	./codebuild_build.sh -s ./test_build/ -c -i local/aws-codebuild-ubuntu-standard-minimal -a bucket
+
 .PHONY: test
-test: build_build_container
-	./codebuild_build.sh -c -i local/aws-codebuild-ubuntu-standard-minimal -a bucket
+test: test_local
